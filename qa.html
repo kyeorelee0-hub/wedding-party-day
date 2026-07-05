@@ -12,24 +12,26 @@
 
     html, body { height: 100%; overflow: hidden; }
 
-    .bg {
+    .bg-video {
       position: fixed;
       inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       z-index: 0;
-      background: url('photo-qa.jpg') center/cover no-repeat;
     }
 
-    .bg::after {
-      content: '';
-      position: absolute;
+    .bg-overlay {
+      position: fixed;
       inset: 0;
-      background: rgba(10, 6, 3, 0.55);
+      background: rgba(10, 6, 3, 0.58);
+      z-index: 1;
     }
 
     .scroll-wrap {
       position: fixed;
       inset: 0;
-      z-index: 1;
+      z-index: 2;
       overflow-y: scroll;
       -webkit-overflow-scrolling: touch;
     }
@@ -49,7 +51,7 @@
       align-items: center;
       gap: 16px;
       padding: 20px 24px;
-      background: rgba(10, 6, 3, 0.4);
+      background: rgba(10, 6, 3, 0.45);
       border-bottom: 1px solid rgba(255,255,255,0.10);
     }
 
@@ -99,6 +101,13 @@
       font-size: 20px;
       font-weight: 500;
       color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .section-desc {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 12px;
+      color: rgba(255,255,255,0.40);
       margin-bottom: 40px;
     }
 
@@ -155,22 +164,28 @@
     .qa-answer {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.4s ease;
+      transition: max-height 0.5s ease;
     }
 
-    .qa-item.open .qa-answer { max-height: 500px; }
+    .qa-item.open .qa-answer { max-height: 1200px; }
 
     .qa-answer-inner {
       padding: 0 0 24px 36px;
       font-family: 'Noto Serif KR', serif;
       font-size: 13px;
-      line-height: 2;
+      line-height: 2.1;
       color: rgba(255,255,255,0.65);
     }
+
+    .qa-answer-inner p + p { margin-top: 14px; }
   </style>
 </head>
 <body>
-  <div class="bg"></div>
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="qa-bg.mp4" type="video/mp4">
+  </video>
+  <div class="bg-overlay"></div>
+
   <div class="scroll-wrap">
     <div class="page">
       <div class="top-bar">
@@ -182,7 +197,7 @@
       <div class="content">
         <p class="section-label">Q & A</p>
         <h2 class="section-heading">두 사람 이야기</h2>
-
+        <p class="section-desc">인상의 답변으로 구성되어 있어요</p>
         <div class="qa-list" id="qaList"></div>
       </div>
     </div>
@@ -190,14 +205,38 @@
 
   <script>
     const QA_DATA = [
-      { q: '언제 처음 만났나요?', a: '' },
-      { q: '그때부터 계속 사귄건가요?', a: '' },
-      { q: '프로포즈는 했나요?', a: '' },
-      { q: '신혼여행은 어디?', a: '' },
-      { q: '신혼집은 어딘가요?', a: '' },
-      { q: '왜 결혼을 결심했나요? — 겨레 편', a: '' },
-      { q: '왜 결혼을 결심했나요? — 인상 편', a: '' },
-      { q: '왜이렇게 빨리 결혼해요?', a: '' },
+      {
+        q: '언제 처음 만났나요?',
+        a: `<p>처음 인사를 나눈 건 2009년 여름방학, 연대 중앙 춤동아리 '하리'에서였어요. 신입생 팝핀팀에 여성분이 한 분 계셨는데, 그분이 바로 겨레였죠. 함께 연고전 공연을 준비하면서 친해졌어요.</p><p>그런데 사실 진짜 처음 본 건 그 해 1학기 교양수업 '사진예술의 이해'에서였어요. 중간고사 대체 발표를 하던 어떤 여성분이 너무 멋있고 딱 제 스타일이라 번호를 물어볼까 했는데, 망설이다가 결국 물어보지 못했거든요. 그런데 그분을 학기가 끝나고 들어간 춤 동아리에서 다시 만난 거예요. 심지어 같은 팀으로요.</p>`
+      },
+      {
+        q: '그때부터 계속 사귄건가요?',
+        a: `<p>그렇진 않아요. 2009년 2학기에 만나기 시작했는데, 제가 2010년 2월에 군대를 가게 되었거든요. 몇 달 만나지 못하고 입대했고, 군대에서 헤어지게 되었어요.</p><p>그렇게 안 좋게 헤어지고, 다시 연락을 해본 건 전역 후 한 3년쯤 지나서였던 것 같아요. 이후로도 2~3년에 한 번씩 어쩌다 연락을 하고 가끔 얼굴을 볼 때도 있었지만, 다시 사귀지는 않았어요.</p><p>제가 2021년에 캐나다로 박사 후 과정을 떠났고, 정식으로 다시 만나게 된 건 작년 8월, 제가 캐나다에서 돌아올 무렵부터예요.</p>`
+      },
+      {
+        q: '프로포즈는 했나요?',
+        a: `<p>올해 발렌타인데이에 했어요. 결혼 얘기를 꺼내고 싶었는데, 정식 프로포즈를 하지 않고 그 이야기를 어떻게 꺼낼지 잘 모르겠더라고요. 그래서 솔직하게 물어봤어요.</p><p>"난 너랑 결혼하고 싶은 마음인데, 넌 어떠냐고."</p>`
+      },
+      {
+        q: '신혼여행은 어디로 가나요?',
+        a: `<p>아직 정하지 않았어요. 제가 2학기 강의 준비로 여유가 없을 것 같아서 겨레에게 양해를 구하고 겨울에 가기로 했어요.</p><p>결혼식이 끝나고는 제주도에서 잠깐 쉬고, 겨울에는 유럽이나 따뜻한 동남아로 가지 않을까 싶어요. 아직 아무것도 정한 건 없습니다.</p>`
+      },
+      {
+        q: '신혼집은 어딘가요?',
+        a: `<p>지금 제가 대전에 살고 겨레는 서울에 살아서 따로 신혼집은 없습니다. 주말에 보고, 평일에도 제가 어느 정도 왔다 갔다 하면서 당분간 지낼 생각이에요. 그 이후 계획도 아직 정해진 건 없습니다.</p>`
+      },
+      {
+        q: '왜 결혼을 결심했나요? — 겨레 편',
+        a: ''
+      },
+      {
+        q: '왜 결혼을 결심했나요? — 인상 편',
+        a: `<p>겨레는 상반된 매력을 많이 가진 사람이라고 생각해요. 따뜻하면서도 냉철하고, 고민이 깊으면서도 자신에게 제일 엄격하고, 꼬인 구석이 없으면서도 드립을 잘 치고, 술을 많이 마시면서도 운동을 열심히 해서 건강하고, 잘생겼으면서도 예쁩니다.</p><p>외모로 입덕한 건 맞아요. 그런데 그것보다는… 이미 품이 많이 드는 방식으로 살아가고 있으면서도 정작 본인은 에너지를 더 채우고 발전해나가려고 하더라고요. 보면서, 아… 여기서 빠져나갈 수가 없겠다 싶었습니다.</p>`
+      },
+      {
+        q: '왜이렇게 빨리 결혼해요?',
+        a: `<p>겨레랑 빨리 결혼하고 싶어서 합니다.</p>`
+      },
     ];
 
     const list = document.getElementById('qaList');
@@ -209,7 +248,7 @@
           <span class="qa-arrow">▾</span>
         </button>
         <div class="qa-answer">
-          <div class="qa-answer-inner">${item.a || '답변 준비 중이에요 :)'}</div>
+          <div class="qa-answer-inner">${item.a || '<p>답변 준비 중이에요 :)</p>'}</div>
         </div>
       </div>
     `).join('');
