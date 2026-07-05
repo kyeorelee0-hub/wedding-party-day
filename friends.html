@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>파티 참석한 친구들</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body { height: 100%; overflow: hidden; }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: url('photo-friends.jpg') center/cover no-repeat;
+    }
+
+    .bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 6, 3, 0.55);
+    }
+
+    .scroll-wrap {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .page {
+      min-height: 100%;
+      padding: 0 0 80px;
+      color: #fff;
+    }
+
+    /* 헤더 */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      background: rgba(10, 6, 3, 0.4);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .back-btn {
+      text-decoration: none;
+      color: rgba(255,255,255,0.6);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .back-btn:hover { color: #fff; }
+
+    .top-bar-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .top-bar-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: #d4b896;
+      margin-left: auto;
+    }
+
+    /* 컨텐츠 */
+    .content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 20px;
+    }
+
+    .section-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #d4b896;
+      margin-bottom: 8px;
+    }
+
+    .section-heading {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .section-desc {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 36px;
+    }
+
+    /* 카드 그리드 */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+    }
+
+    .flip-card {
+      aspect-ratio: 3 / 4;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .flip-card-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front,
+    .flip-card-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 16px;
+      text-align: center;
+    }
+
+    .flip-card-front {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .flip-card-back {
+      background: rgba(30, 20, 12, 0.88);
+      border-color: rgba(212,184,150,0.25);
+      transform: rotateY(180deg);
+    }
+
+    .card-icon {
+      font-size: 28px;
+      margin-bottom: 14px;
+      line-height: 1;
+    }
+
+    .card-relation {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #d4b896;
+      margin-bottom: 8px;
+    }
+
+    .card-hint {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 10px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .card-back-text {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 12px;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.82);
+    }
+
+    .card-back-accent {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: #d4b896;
+      margin-top: 12px;
+    }
+
+    .cards-msg {
+      text-align: center;
+      padding: 60px 0;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 13px;
+      color: rgba(255,255,255,0.35);
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 480px) {
+      .cards-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="scroll-wrap">
+    <div class="page">
+      <div class="top-bar">
+        <a class="back-btn" href="index.html">←</a>
+        <span class="top-bar-title">파티 참석한 친구들</span>
+        <span class="top-bar-sub">Our People</span>
+      </div>
+
+      <div class="content">
+        <p class="section-label">Our People</p>
+        <h2 class="section-heading">오늘 함께한 사람들</h2>
+        <p class="section-desc">카드를 눌러서 만난 계기를 확인해보세요</p>
+        <div class="cards-grid" id="cardsGrid">
+          <p class="cards-msg">불러오는 중...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz5ffiugY87N8Xum6XfhVC1EGp5UuZVnTSB91UN8oBel31Wm8prP5KzRJOVv6GA955p/exec';
+    const ICONS = ['🌿', '☕', '🎵', '📚', '🌊', '🎨', '🌙', '✨', '🍀', '🌸', '🎭', '🏔️', '🎸', '🍃', '🌺', '🦋'];
+
+    async function loadCards() {
+      const grid = document.getElementById('cardsGrid');
+      try {
+        const res = await fetch(SCRIPT_URL + '?action=cards');
+        const data = await res.json();
+        if (!data.cards || data.cards.length === 0) {
+          grid.innerHTML = '<p class="cards-msg">카드가 아직 준비 중이에요</p>';
+          return;
+        }
+        grid.innerHTML = data.cards.map((card, i) => {
+          const icon = card.icon || ICONS[i % ICONS.length];
+          return `
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+              <div class="flip-card-inner">
+                <div class="flip-card-front">
+                  <div class="card-icon">${icon}</div>
+                  <div class="card-relation">${card.relation || '겨레 친구'}</div>
+                  <div class="card-hint">눌러서 보기</div>
+                </div>
+                <div class="flip-card-back">
+                  <div class="card-back-text">${card.story}</div>
+                  <div class="card-back-accent">${card.relation || '겨레 친구'}</div>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } catch (e) {
+        grid.innerHTML = '<p class="cards-msg">불러오지 못했어요</p>';
+      }
+    }
+
+    loadCards();
+  </script>
+</body>
+</html>

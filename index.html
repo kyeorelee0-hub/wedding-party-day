@@ -10,427 +10,182 @@
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    :root {
-      --ivory: #f8f5f0;
-      --warm-white: #fdf9f5;
-      --gold: #b89b7a;
-      --dark: #2a211a;
-      --muted: #7a6a60;
-      --border: #e2d9ce;
+    html, body { height: 100%; overflow: hidden; }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: url('photo-main.jpg') center/cover no-repeat;
     }
 
-    body {
-      font-family: 'Noto Serif KR', serif;
-      background: var(--ivory);
-      color: var(--dark);
-      min-height: 100vh;
+    .bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 6, 3, 0.42);
     }
 
-    /* ── Header ── */
-    .hero {
+    .scroll-wrap {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .page {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 24px 80px;
+      color: #fff;
       text-align: center;
-      padding: 80px 20px 64px;
-      background: var(--warm-white);
-      border-bottom: 1px solid var(--border);
     }
 
-    .hero-en {
+    .hero-label {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 13px;
-      letter-spacing: 4px;
-      color: var(--gold);
+      font-size: 12px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #d4b896;
       margin-bottom: 20px;
     }
 
     .hero-names {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 36px;
+      font-size: 42px;
       font-weight: 300;
       letter-spacing: 2px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
-    .hero-heart {
-      color: var(--gold);
-      margin: 0 10px;
-    }
+    .hero-heart { color: #d4b896; margin: 0 10px; }
 
     .hero-date {
+      font-family: 'Noto Serif KR', serif;
       font-size: 12px;
       letter-spacing: 2px;
-      color: var(--muted);
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 64px;
     }
 
-    /* ── Section common ── */
-    .section {
-      max-width: 840px;
-      margin: 0 auto;
-      padding: 72px 24px;
-    }
-
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 11px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 8px;
-    }
-
-    .section-heading {
-      font-size: 20px;
-      font-weight: 500;
-      margin-bottom: 40px;
-    }
-
-    .divider {
-      height: 1px;
-      background: var(--border);
-      max-width: 840px;
-      margin: 0 auto;
-    }
-
-    /* ── Flip Cards ── */
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 16px;
-    }
-
-    .flip-card {
-      aspect-ratio: 3 / 4;
-      perspective: 1000px;
-      cursor: pointer;
-    }
-
-    .flip-card-inner {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .flip-card.flipped .flip-card-inner {
-      transform: rotateY(180deg);
-    }
-
-    .flip-card-front,
-    .flip-card-back {
-      position: absolute;
-      inset: 0;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      border: 1px solid var(--border);
-      border-radius: 2px;
+    /* 주의사항 */
+    .notices {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 20px;
-      text-align: center;
+      gap: 14px;
+      max-width: 340px;
+      width: 100%;
+      margin-bottom: 64px;
     }
 
-    .flip-card-front {
-      background: var(--warm-white);
+    .notice-item {
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 2px;
+      padding: 18px 22px;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 13px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.88);
+      text-align: left;
     }
 
-    .flip-card-back {
-      background: var(--dark);
-      color: var(--ivory);
-      transform: rotateY(180deg);
-    }
-
-    .card-icon {
-      font-size: 32px;
-      margin-bottom: 16px;
-      line-height: 1;
-    }
-
-    .card-relation {
-      font-size: 10px;
+    .notice-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
       letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--gold);
+      color: #d4b896;
+      display: block;
       margin-bottom: 6px;
     }
 
-    .card-hint {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 12px;
-    }
-
-    .card-back-text {
-      font-size: 13px;
-      line-height: 1.9;
-      color: #e8e0d5;
-    }
-
-    .card-back-accent {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 11px;
-      letter-spacing: 2px;
-      color: var(--gold);
-      margin-top: 14px;
-    }
-
-    /* Loading / Error states */
-    .cards-loading {
-      text-align: center;
-      padding: 60px 0;
-      font-size: 13px;
-      color: var(--muted);
-      grid-column: 1 / -1;
-    }
-
-    /* ── Q&A ── */
-    .qa-list {
+    /* 네비게이션 카드 */
+    .nav-cards {
       display: flex;
       flex-direction: column;
-      gap: 0;
-    }
-
-    .qa-item {
-      border-bottom: 1px solid var(--border);
-      overflow: hidden;
-    }
-
-    .qa-item:first-child {
-      border-top: 1px solid var(--border);
-    }
-
-    .qa-question {
+      gap: 12px;
+      max-width: 340px;
       width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 22px 4px;
-      background: none;
-      border: none;
-      font-family: 'Noto Serif KR', serif;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--dark);
-      cursor: pointer;
+    }
+
+    .nav-card {
+      display: block;
+      text-decoration: none;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 2px;
+      padding: 22px 24px;
       text-align: left;
-      gap: 16px;
+      transition: background 0.2s;
     }
 
-    .qa-question .qa-num {
+    .nav-card:hover { background: rgba(255,255,255,0.18); }
+
+    .nav-card-label {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 13px;
-      color: var(--gold);
-      flex-shrink: 0;
-      width: 20px;
-    }
-
-    .qa-question .qa-text {
-      flex: 1;
-    }
-
-    .qa-question .qa-arrow {
-      font-size: 12px;
-      color: var(--muted);
-      transition: transform 0.3s;
-      flex-shrink: 0;
-    }
-
-    .qa-item.open .qa-arrow {
-      transform: rotate(180deg);
-    }
-
-    .qa-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease;
-    }
-
-    .qa-item.open .qa-answer {
-      max-height: 400px;
-    }
-
-    .qa-answer-inner {
-      padding: 0 4px 24px 36px;
-      font-size: 14px;
-      line-height: 2;
-      color: var(--muted);
-    }
-
-    /* ── Footer ── */
-    .footer {
-      text-align: center;
-      padding: 48px 20px;
-      border-top: 1px solid var(--border);
-      background: var(--warm-white);
-    }
-
-    .footer-names {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 18px;
-      letter-spacing: 2px;
-      margin-bottom: 8px;
-    }
-
-    .footer-date {
       font-size: 11px;
-      letter-spacing: 2px;
-      color: var(--muted);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #d4b896;
+      display: block;
+      margin-bottom: 6px;
     }
 
-    @media (max-width: 480px) {
-      .hero-names { font-size: 28px; }
-      .cards-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-      .section { padding: 56px 20px; }
+    .nav-card-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .nav-card-arrow {
+      float: right;
+      color: rgba(255,255,255,0.4);
+      font-size: 16px;
+      margin-top: 2px;
+    }
+
+    @media (max-width: 420px) {
+      .hero-names { font-size: 34px; }
     }
   </style>
 </head>
 <body>
+  <div class="bg"></div>
+  <div class="scroll-wrap">
+    <div class="page">
+      <p class="hero-label">Wedding Party</p>
+      <h1 class="hero-names">유인상 <span class="hero-heart">♥</span> 이겨레</h1>
+      <p class="hero-date">2026 · 07 · 10 · 역삼 샹볼뮈지니</p>
 
-  <header class="hero">
-    <p class="hero-en">Wedding Party</p>
-    <h1 class="hero-names">
-      유인상 <span class="hero-heart">♥</span> 이겨레
-    </h1>
-    <p class="hero-date">2026 · 07 · 10 · 역삼 샹볼뮈지니</p>
-  </header>
-
-  <!-- Flip Cards -->
-  <section class="section">
-    <p class="section-title">Our People</p>
-    <h2 class="section-heading">오늘 함께한 사람들</h2>
-    <div class="cards-grid" id="cardsGrid">
-      <p class="cards-loading">불러오는 중...</p>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- Q&A -->
-  <section class="section">
-    <p class="section-title">Q & A</p>
-    <h2 class="section-heading">두 사람 이야기</h2>
-    <div class="qa-list" id="qaList"></div>
-  </section>
-
-  <footer class="footer">
-    <p class="footer-names">유인상 <span style="color:var(--gold)">♥</span> 이겨레</p>
-    <p class="footer-date">2026 · 07 · 10</p>
-  </footer>
-
-  <script>
-    // ── Apps Script URL ──
-    // 새 배포 후 여기 URL 교체
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz5ffiugY87N8Xum6XfhVC1EGp5UuZVnTSB91UN8oBel31Wm8prP5KzRJOVv6GA955p/exec';
-
-    // ── Q&A 데이터 ──
-    const QA_DATA = [
-      {
-        q: '언제 처음 만났나요?',
-        a: ''
-      },
-      {
-        q: '그때부터 계속 사귄건가요?',
-        a: ''
-      },
-      {
-        q: '프로포즈는 했나요?',
-        a: ''
-      },
-      {
-        q: '신혼여행은 어디?',
-        a: ''
-      },
-      {
-        q: '신혼집은 어딘가요?',
-        a: ''
-      },
-      {
-        q: '왜 결혼을 결심했나요? — 겨레 편',
-        a: ''
-      },
-      {
-        q: '왜 결혼을 결심했나요? — 인상 편',
-        a: ''
-      },
-      {
-        q: '왜이렇게 빨리 결혼해요?',
-        a: ''
-      },
-    ];
-
-    // ── 카드 아이콘 풀 ──
-    const ICONS = ['🌿', '☕', '🎵', '📚', '🌊', '🎨', '🌙', '✨', '🍀', '🌸', '🎭', '🏔️'];
-
-    // ── 카드 로드 ──
-    async function loadCards() {
-      const grid = document.getElementById('cardsGrid');
-      try {
-        const res = await fetch(SCRIPT_URL + '?action=cards');
-        const data = await res.json();
-        if (!data.cards || data.cards.length === 0) {
-          grid.innerHTML = '<p class="cards-loading">카드가 아직 준비 중이에요</p>';
-          return;
-        }
-        renderCards(data.cards);
-      } catch (e) {
-        grid.innerHTML = '<p class="cards-loading">불러오지 못했어요</p>';
-      }
-    }
-
-    function renderCards(cards) {
-      const grid = document.getElementById('cardsGrid');
-      grid.innerHTML = cards.map((card, i) => {
-        const icon = card.icon || ICONS[i % ICONS.length];
-        return `
-          <div class="flip-card" onclick="this.classList.toggle('flipped')">
-            <div class="flip-card-inner">
-              <div class="flip-card-front">
-                <div class="card-icon">${icon}</div>
-                <div class="card-relation">${card.relation || '겨레 친구'}</div>
-                <div class="card-hint">눌러서 보기</div>
-              </div>
-              <div class="flip-card-back">
-                <div class="card-back-text">${card.story}</div>
-                <div class="card-back-accent">${card.relation || '겨레 친구'}</div>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    // ── Q&A 렌더 ──
-    function renderQA() {
-      const list = document.getElementById('qaList');
-      list.innerHTML = QA_DATA.map((item, i) => `
-        <div class="qa-item">
-          <button class="qa-question" onclick="toggleQA(this)">
-            <span class="qa-num">${String(i + 1).padStart(2, '0')}</span>
-            <span class="qa-text">${item.q}</span>
-            <span class="qa-arrow">▾</span>
-          </button>
-          <div class="qa-answer">
-            <div class="qa-answer-inner">${item.a || '(답변 준비 중이에요)'}</div>
-          </div>
+      <div class="notices">
+        <div class="notice-item">
+          <span class="notice-num">01</span>
+          주의사항 첫 번째를 여기에 써줘
         </div>
-      `).join('');
-    }
+        <div class="notice-item">
+          <span class="notice-num">02</span>
+          주의사항 두 번째를 여기에 써줘
+        </div>
+      </div>
 
-    function toggleQA(btn) {
-      const item = btn.closest('.qa-item');
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.qa-item.open').forEach(el => el.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
-    }
-
-    // ── Init ──
-    if (SCRIPT_URL !== 'APPS_SCRIPT_URL_HERE') {
-      loadCards();
-    } else {
-      document.getElementById('cardsGrid').innerHTML = '<p class="cards-loading">카드 데이터 연결 대기 중</p>';
-    }
-    renderQA();
-  </script>
+      <div class="nav-cards">
+        <a class="nav-card" href="qa.html">
+          <span class="nav-card-label">About Us</span>
+          <span class="nav-card-title">인상 &amp; 겨레 알아보기</span>
+          <span class="nav-card-arrow">→</span>
+        </a>
+        <a class="nav-card" href="friends.html">
+          <span class="nav-card-label">Our People</span>
+          <span class="nav-card-title">파티 참석한 친구들 알아보기</span>
+          <span class="nav-card-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
