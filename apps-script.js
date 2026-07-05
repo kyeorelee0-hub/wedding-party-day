@@ -2,9 +2,10 @@
 // 기존 코드에 아래 doGet 함수를 추가하세요.
 // 시트에 "cards" 탭을 새로 만들고, 아래 형식으로 데이터를 입력하세요:
 //
-//   A열: 관계    (예: 겨레 친구)
-//   B열: 만난 계기 (카드 뒷면에 표시될 텍스트)
-//   C열: 아이콘   (이모지, 선택사항 — 비워두면 자동 배정)
+//   A열: 관계       (예: 겨레 친구)
+//   B열: 이름       (참고용 — 웹사이트에 표시되지 않음)
+//   C열: 만난 계기  (카드 뒷면에 표시될 텍스트)
+//   D열: 아이콘     (이모지, 선택사항 — 비워두면 자동 배정)
 //
 // 1행은 헤더로 건너뜁니다.
 
@@ -36,11 +37,11 @@ function getCards() {
     const rows = sheet.getDataRange().getValues();
     // 첫 행은 헤더
     const cards = rows.slice(1)
-      .filter(row => row[1]) // 만난 계기가 있는 행만
+      .filter(row => row[2]) // C열 만난 계기가 있는 행만
       .map(row => ({
         relation: row[0] || '겨레 친구',
-        story: row[1],
-        icon: row[2] || '',
+        story: row[2],
+        icon: row[3] || '',
       }));
 
     // CORS 허용 헤더 포함
