@@ -166,13 +166,13 @@
       line-height: 1;
     }
 
-    .card-relation {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #d4b896;
-      margin-bottom: 8px;
+    .card-keyword {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
     }
 
     .card-hint {
@@ -241,6 +241,18 @@
       '🫶','🌏','🎆','🪁','🌜'
     ];
 
+    const KEYWORDS = [
+      '민법 왕','준수 진성팬','만물박사','숨은 애교왕','평생 롤모델',
+      '인상픽 친구','기아 세금박사','알러지 제로','취미 부자','타로 마스터',
+      '볼꼴 다 본','하리 팝핀','섬세한 감성','야구로 이직','언어 천재',
+      '술버릇 착한','조용한 대표님','먹성 선배','발레 동기','영화계 인재',
+      '로스쿨 술친구','명절 요리왕','백두산 동반','기아 동갑','덕질로 번 돈',
+      '상산고 전설','안 쉬는 사람','국밥 정보통','평생 No.1','비밀 조직원',
+      '태종대 인연','결혼 스토리','다트 고수','여자 보는 눈','인생 필라테스',
+      '같은날 퇴사','귀여운 막내','광주 맛집통','변호사 변신','인생 선배',
+      '180도 돌변','야구볼 때 야수','선함이 뚝뚝','방탈출 단짝'
+    ];
+
     async function loadCards() {
       const grid = document.getElementById('cardsGrid');
       try {
@@ -252,11 +264,13 @@
         }
         grid.innerHTML = data.cards.map((card, i) => {
           const icon = card.icon || ICONS[i % ICONS.length];
+          const keyword = KEYWORDS[i] || '';
           return `
             <div class="flip-card" onclick="this.classList.toggle('flipped')">
               <div class="flip-card-inner">
                 <div class="flip-card-front">
                   <div class="card-icon">${icon}</div>
+                  ${keyword ? `<div class="card-keyword">${keyword}</div>` : ''}
                   <div class="card-hint">눌러서 보기</div>
                 </div>
                 <div class="flip-card-back">
