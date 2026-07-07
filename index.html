@@ -23,7 +23,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(10, 6, 3, 0.48);
+      background: rgba(10, 6, 3, 0.50);
     }
 
     .scroll-wrap {
@@ -44,7 +44,6 @@
       text-align: center;
     }
 
-    /* 헤더 */
     .hero-label {
       font-family: 'Cormorant Garamond', serif;
       font-size: 12px;
@@ -72,50 +71,63 @@
       margin-bottom: 52px;
     }
 
-    /* 환영 메시지 */
     .welcome {
       font-family: 'Noto Serif KR', serif;
       font-size: 14px;
       font-weight: 500;
       color: rgba(255,255,255,0.90);
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       line-height: 1.7;
     }
 
-    /* 안내사항 */
-    .notices {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    /* 안내 한 카드 */
+    .notice-card {
       max-width: 380px;
       width: 100%;
-      margin-bottom: 52px;
-      text-align: left;
-    }
-
-    .notice-item {
       background: rgba(255,255,255,0.09);
       border: 1px solid rgba(255,255,255,0.16);
       border-radius: 2px;
-      padding: 16px 20px;
+      padding: 24px 24px 20px;
+      text-align: left;
+      margin-bottom: 28px;
+    }
+
+    .notice-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #d4b896;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .notice-list {
       display: flex;
-      gap: 14px;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .notice-item {
+      display: flex;
+      gap: 12px;
       align-items: flex-start;
     }
 
     .notice-num {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 13px;
+      font-size: 12px;
       color: #d4b896;
       flex-shrink: 0;
-      padding-top: 1px;
+      padding-top: 2px;
+      width: 14px;
     }
 
     .notice-text {
       font-family: 'Noto Serif KR', serif;
       font-size: 12px;
       line-height: 1.9;
-      color: rgba(255,255,255,0.80);
+      color: rgba(255,255,255,0.78);
     }
 
     .notice-text a {
@@ -128,7 +140,7 @@
     .nav-cards {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       max-width: 380px;
       width: 100%;
     }
@@ -137,15 +149,18 @@
       display: flex;
       align-items: center;
       text-decoration: none;
-      background: rgba(255,255,255,0.09);
-      border: 1px solid rgba(255,255,255,0.20);
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.28);
       border-radius: 2px;
-      padding: 20px 22px;
+      padding: 26px 24px;
       text-align: left;
-      transition: background 0.2s;
+      transition: background 0.2s, border-color 0.2s;
     }
 
-    .nav-card:hover { background: rgba(255,255,255,0.16); }
+    .nav-card:hover {
+      background: rgba(255,255,255,0.20);
+      border-color: rgba(255,255,255,0.45);
+    }
 
     .nav-card-text { flex: 1; }
 
@@ -156,20 +171,21 @@
       text-transform: uppercase;
       color: #d4b896;
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .nav-card-title {
       font-family: 'Noto Serif KR', serif;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 500;
       color: #fff;
+      display: block;
     }
 
     .nav-card-arrow {
-      color: rgba(255,255,255,0.35);
-      font-size: 16px;
-      margin-left: 12px;
+      color: #d4b896;
+      font-size: 22px;
+      margin-left: 16px;
     }
 
     @media (max-width: 420px) {
@@ -187,26 +203,29 @@
 
       <p class="welcome">겨레와 인상의 청첩파티에<br>오신 것을 환영합니다!</p>
 
-      <div class="notices">
-        <div class="notice-item">
-          <span class="notice-num">1</span>
-          <span class="notice-text">참석하신 모든 분들은 <a href="https://kris0816.netlify.app/" target="_blank">모바일 청첩장</a>에서 결혼식 참석 여부에 먼저 답변해주세요!</span>
-        </div>
-        <div class="notice-item">
-          <span class="notice-num">2</span>
-          <span class="notice-text">함께 앉을 사람이 없는 분들은 걱정하지 마세요! 1층에서 저희랑 같이 놀아요 :)</span>
-        </div>
-        <div class="notice-item">
-          <span class="notice-num">3</span>
-          <span class="notice-text">편안하게 저희의 추억을 남기기 위해, 파티 전체적으로 스냅 작가분이 함께할 예정이에요! 사진을 남기기 싫은 분은 저희에게 말씀주세요.</span>
-        </div>
-        <div class="notice-item">
-          <span class="notice-num">4</span>
-          <span class="notice-text">논알콜 음료도 있어요! 1층 카운터에서 메뉴 확인 후 주문해주세요.</span>
-        </div>
-        <div class="notice-item">
-          <span class="notice-num">5</span>
-          <span class="notice-text">인상 &amp; 겨레 스토리가 궁금하거나 파티 참석 친구들이 궁금하다면 아래 페이지를 참고해주세요. 더 궁금한 게 있으면 Q&amp;A에 실명으로 질문해주시면 저희가 찾아가 답변드릴게요!</span>
+      <div class="notice-card">
+        <span class="notice-card-title">안내사항</span>
+        <div class="notice-list">
+          <div class="notice-item">
+            <span class="notice-num">1</span>
+            <span class="notice-text">참석하신 모든 분들은 <a href="https://kris0816.netlify.app/" target="_blank">모바일 청첩장</a>에서 결혼식 참석 여부에 먼저 답변해주세요!</span>
+          </div>
+          <div class="notice-item">
+            <span class="notice-num">2</span>
+            <span class="notice-text">함께 앉을 사람이 없는 분들은 걱정하지 마세요! 1층에서 저희랑 같이 놀아요 :)</span>
+          </div>
+          <div class="notice-item">
+            <span class="notice-num">3</span>
+            <span class="notice-text">파티 전체적으로 스냅 작가분이 함께할 예정이에요! 사진을 남기기 싫은 분은 저희에게 말씀주세요.</span>
+          </div>
+          <div class="notice-item">
+            <span class="notice-num">4</span>
+            <span class="notice-text">논알콜 음료도 있어요! 1층 카운터에서 메뉴 확인 후 주문해주세요.</span>
+          </div>
+          <div class="notice-item">
+            <span class="notice-num">5</span>
+            <span class="notice-text">더 궁금한 게 있으면 Q&amp;A에 실명으로 질문해주시면 저희가 찾아가 답변드릴게요!</span>
+          </div>
         </div>
       </div>
 
@@ -214,14 +233,14 @@
         <a class="nav-card" href="qa.html">
           <div class="nav-card-text">
             <span class="nav-card-label">About Us</span>
-            <span class="nav-card-title">인상 &amp; 겨레 알아보기</span>
+            <span class="nav-card-title">인상 &amp; 겨레 Q&amp;A</span>
           </div>
           <span class="nav-card-arrow">→</span>
         </a>
         <a class="nav-card" href="friends.html">
           <div class="nav-card-text">
             <span class="nav-card-label">Our People</span>
-            <span class="nav-card-title">파티 참석한 친구들 알아보기</span>
+            <span class="nav-card-title">파티 참석한 친구들 👀</span>
           </div>
           <span class="nav-card-arrow">→</span>
         </a>
