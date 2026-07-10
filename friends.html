@@ -282,57 +282,59 @@
       '🦁','💛','🌻','⚾','🧩','🎵','🏥','💑','🌈','✨'
     ];
 
-    const CARD_DATA = {
-      '오수현':   { keyword: '민법 왕',       icon: '⚖️' },
-      '노혜윤':   { keyword: '준수 진성팬',    icon: '🎭' },
-      '한우정':   { keyword: '만물박사',       icon: '📚' },
-      '정혜현':   { keyword: '숨은 애교왕',    icon: '🌸' },
-      '이희주':   { keyword: '평생 롤모델',    icon: '🌟' },
-      '임윤진':   { keyword: '윤진짝궁',       icon: '🍀' },
-      '한지훈':   { keyword: '기아 세금박사',  icon: '⚾' },
-      '이예랑':   { keyword: '타로 마스터',    icon: '🔮' },
-      '지상준':   { keyword: '취미 부자',      icon: '🎨' },
-      '안형진':   { keyword: '입학부터 찐친',  icon: '🤝' },
-      '김혜림':   { keyword: '하리 팝핀',      icon: '💃' },
-      '정재민':   { keyword: '섬세한 감성',    icon: '🌿' },
-      '권영인':   { keyword: '인생 반전러',    icon: '🌈' },
-      '한선민':   { keyword: '언어 천재',      icon: '✍️' },
-      '박종범':   { keyword: '술버릇 착한',    icon: '🍃' },
-      '온상헌':   { keyword: '조용한 대표님',  icon: '💼' },
-      '황인승':   { keyword: '먹성 선배',      icon: '🍖' },
-      '이거량':   { keyword: '발레 동기',      icon: '🩰' },
-      '곽희진':   { keyword: '영화계 인재',    icon: '🎬' },
-      '부성현':   { keyword: '로스쿨 술친구',  icon: '🍻' },
-      '하정진':   { keyword: '명절 요리왕',    icon: '🍳' },
-      '백민':     { keyword: '백두산 동반',    icon: '🏔️' },
-      '최하영':   { keyword: '기아 동갑',      icon: '🐯' },
-      '이영지':   { keyword: '덕질로 번 돈',   icon: '⭐' },
-      '박정훈':   { keyword: '상산고 전설',    icon: '🏆' },
-      '박성민':   { keyword: '안 쉬는 사람',   icon: '🌊' },
-      '조재광':   { keyword: '국밥 정보통',    icon: '🍲' },
-      '송건호':   { keyword: '평생 No.1',      icon: '💝' },
-      '정현석':   { keyword: '비밀 조직원',    icon: '🌙' },
-      '이원준':   { keyword: '태종대 인연',    icon: '⛵' },
-      '박진수':   { keyword: '결혼 스토리',    icon: '💍' },
-      '이병선':   { keyword: '다트 고수',      icon: '🎯' },
-      '류승훈':   { keyword: '여자 보는 눈',   icon: '👀' },
-      '소이쌤':   { keyword: '인생 필라테스',  icon: '🧘' },
-      '문예은':   { keyword: '같은날 퇴사',    icon: '🚀' },
-      '이송화':   { keyword: '귀여운 막내',    icon: '🌸' },
-      '이지수':   { keyword: '변호사 변신',    icon: '⚖️' },
-      '나소리':   { keyword: '인생 선배',      icon: '🌟' },
-      '박일훈':   { keyword: '180도 돌변',     icon: '🔄' },
-      '김동현':   { keyword: '야구볼 때 야수', icon: '🦁' },
-      '박선경':   { keyword: '선함이 뚝뚝',    icon: '💛' },
-      '방승익':   { keyword: '베이스가 선한',  icon: '🌻' },
-      '선구오빠': { keyword: '한화팬의 용기',  icon: '⚾' },
-      '하채은':   { keyword: '방탈출 단짝',    icon: '🧩' },
-      '문지예':   { keyword: '끼 넘치는 친구', icon: '🎵' },
-      '김다희':   { keyword: '성실한 간호사',  icon: '🏥' },
-      '허태원':   { keyword: '찰떡 케미',      icon: '💑' },
-      '소현석':   { keyword: '마음이 부자',    icon: '🌈' },
-      '이찬구':   { keyword: '독보적 존재감',  icon: '✨' },
-    };
+    function getCardMeta(story) {
+      const s = story || '';
+      if (s.includes('민법 왕') || s.includes('오도사'))              return { keyword: '민법 왕',       icon: '⚖️' };
+      if (s.includes('시아준수') || s.includes('썰바구니'))           return { keyword: '준수 진성팬',    icon: '🎭' };
+      if (s.includes('혼자 연구하는거 좋아'))                         return { keyword: '만물박사',       icon: '📚' };
+      if (s.includes('내향인이지만 끼많고'))                          return { keyword: '숨은 애교왕',    icon: '🌸' };
+      if (s.includes('중학교 선배') && s.includes('존경하는 친구'))   return { keyword: '평생 롤모델',    icon: '🌟' };
+      if (s.includes('윤진이와 부부'))                                 return { keyword: '윤진짝궁',       icon: '🍀' };
+      if (s.includes('세금환급') || s.includes('행적적인거'))         return { keyword: '기아 세금박사',  icon: '⚾' };
+      if (s.includes('지연성검사도 0') || s.includes('알러지도 음식물')) return { keyword: '알러지 제로', icon: '🍽️' };
+      if (s.includes('윤진부부는 함께 취미부자'))                     return { keyword: '취미 부자',      icon: '🎨' };
+      if (s.includes('타로/사주') || s.includes('에너제틱한 예랑'))   return { keyword: '타로 마스터',    icon: '🔮' };
+      if (s.includes('1학년때부터') && s.includes('와이프분이랑'))    return { keyword: '입학부터 찐친',  icon: '🤝' };
+      if (s.includes('팝핀에서 친구 하나도 없을 때'))                 return { keyword: '하리 팝핀',      icon: '💃' };
+      if (s.includes('깊은 생각과 섬세한 마음씀'))                    return { keyword: '섬세한 감성',    icon: '🌿' };
+      if (s.includes('토스로 이직함'))                                 return { keyword: '인생 반전러',    icon: '🌈' };
+      if (s.includes('섬세하고 센스있는 언어능력'))                   return { keyword: '언어 천재',      icon: '✍️' };
+      if (s.includes('전주 출신') || s.includes('철학과 졸업'))       return { keyword: '술버릇 착한',    icon: '🍃' };
+      if (s.includes('주짓수') || s.includes('지금은 사업가, 대표님')) return { keyword: '조용한 대표님', icon: '💼' };
+      if (s.includes('먹성이 좋아서'))                                 return { keyword: '먹성 선배',      icon: '🍖' };
+      if (s.includes('취미로 발레를 함'))                              return { keyword: '발레 동기',      icon: '🩰' };
+      if (s.includes('영화쪽에서 일하는'))                             return { keyword: '영화계 인재',    icon: '🎬' };
+      if (s.includes('형사정책 수업에서 만나'))                        return { keyword: '로스쿨 술친구',  icon: '🍻' };
+      if (s.includes('쏘세지야채볶음') || s.includes('선민이 남편'))  return { keyword: '명절 요리왕',    icon: '🍳' };
+      if (s.includes('백두산도 올라가봄'))                             return { keyword: '백두산 동반',    icon: '🏔️' };
+      if (s.includes('동갑이어서 더 친해짐') && s.includes('기아'))   return { keyword: '기아 동갑',      icon: '🐯' };
+      if (s.includes('덕질을 위해 돈을 번다'))                        return { keyword: '덕질로 번 돈',   icon: '⭐' };
+      if (s.includes('상산고에서 공부잘하기로'))                       return { keyword: '상산고 전설',    icon: '🏆' };
+      if (s.includes('바쁘다 바빠 인간'))                              return { keyword: '안 쉬는 사람',   icon: '🌊' };
+      if (s.includes('국밥충이라 국밥 정보'))                          return { keyword: '국밥 정보통',    icon: '🍲' };
+      if (s.includes('특수교사') || s.includes('나의 모든 역사를 아는')) return { keyword: '평생 No.1',  icon: '💝' };
+      if (s.includes('어둠의 비밀조직 카톡방'))                        return { keyword: '비밀 조직원',    icon: '🌙' };
+      if (s.includes('태종대에서 만난'))                               return { keyword: '태종대 인연',    icon: '⛵' };
+      if (s.includes('결혼스토리가 제일 재미있음'))                    return { keyword: '결혼 스토리',    icon: '💍' };
+      if (s.includes('다트를 매우매우 잘한다'))                        return { keyword: '다트 고수',      icon: '🎯' };
+      if (s.includes('여자보는 눈이 비슷함'))                          return { keyword: '여자 보는 눈',   icon: '👀' };
+      if (s.includes('코어하우스') || s.includes('최고의 필라테스'))  return { keyword: '인생 필라테스',  icon: '🧘' };
+      if (s.includes('같은 날 퇴사하면서'))                            return { keyword: '같은날 퇴사',    icon: '🚀' };
+      if (s.includes('귀여운 막내 재질') || s.includes('20살 때 보았는데')) return { keyword: '귀여운 막내', icon: '🌸' };
+      if (s.includes('변호사로 변신해서 나타난'))                      return { keyword: '변호사 변신',    icon: '⚖️' };
+      if (s.includes('내 성격 중 일부를 만들었다고 생각함'))          return { keyword: '인생 선배',      icon: '🌟' };
+      if (s.includes('송화핑') || s.includes('직무 전환에 너무 큰 힘')) return { keyword: '180도 돌변',  icon: '🔄' };
+      if (s.includes('야구볼 땐 야수가 됨'))                           return { keyword: '야구볼 때 야수', icon: '🦁' };
+      if (s.includes('선함이 뚝뚝 묻어나는'))                         return { keyword: '선함이 뚝뚝',    icon: '💛' };
+      if (s.includes('지예님') || s.includes('수용성 높은 친구'))     return { keyword: '베이스가 선한',  icon: '🌻' };
+      if (s.includes('한화팬이었음'))                                  return { keyword: '한화팬의 용기',  icon: '⚾' };
+      if (s.includes('동현님') || s.includes('방탈출 진짜 많이'))     return { keyword: '방탈출 단짝',    icon: '🧩' };
+      if (s.includes('초등학교 6학년때 전학') || s.includes('노래도 춤도 다 잘추고')) return { keyword: '끼 넘치는 친구', icon: '🎵' };
+      if (s.includes('간호사가 된 후에') || s.includes('중학교 때 영어학원')) return { keyword: '성실한 간호사', icon: '🏥' };
+      if (s.includes('이 부부는 함께 취미부자') || (s.includes('상준과 커플') && !s.includes('윤진부부'))) return { keyword: '찰떡 케미', icon: '💑' };
+      if (s.includes('심심한 친구인줄 알았는데') || s.includes('자신의 길을 개척하는데에 진심')) return { keyword: '마음이 부자', icon: '🌈' };
+      return { keyword: '', icon: '' };
+    }
 
     let cardsCache = [];
 
@@ -365,7 +367,7 @@
           return;
         }
         cardsCache = data.cards.map((card, i) => {
-          const meta = CARD_DATA[card.name] || {};
+          const meta = getCardMeta(card.story);
           return {
             icon: meta.icon || FALLBACK_ICONS[i % FALLBACK_ICONS.length],
             keyword: meta.keyword || '',
