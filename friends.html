@@ -298,11 +298,11 @@
       if (s.includes('팝핀에서 친구 하나도 없을 때'))                 return { keyword: '하리 팝핀',      icon: '💃' };
       if (s.includes('깊은 생각과 섬세한 마음씀'))                    return { keyword: '섬세한 감성',    icon: '🌿' };
       if (s.includes('토스로 이직함'))                                 return { keyword: '인생 반전러',    icon: '🌈' };
-      if (s.includes('섬세하고 센스있는 언어능력'))                   return { keyword: '언어 천재',      icon: '✍️' };
-      if (s.includes('전주 출신') || s.includes('철학과 졸업'))       return { keyword: '술버릇 착한',    icon: '🍃' };
+      if (s.includes('섬세하고 센스있는 언어능력'))                   return { keyword: '', icon: '', hidden: true };
+      if (s.includes('전주 출신') || s.includes('철학과 졸업') || s.includes('로스쿨 7기') || s.includes('술버릇이 착한')) return { keyword: '술버릇 착한', icon: '🍃' };
       if (s.includes('주짓수') || s.includes('지금은 사업가, 대표님')) return { keyword: '조용한 대표님', icon: '💼' };
       if (s.includes('먹성이 좋아서'))                                 return { keyword: '먹성 선배',      icon: '🍖' };
-      if (s.includes('취미로 발레를 함'))                              return { keyword: '발레 동기',      icon: '🩰' };
+      if (s.includes('취미로 발레를 함'))                              return { keyword: '토스 4년 동기',  icon: '🩰' };
       if (s.includes('영화쪽에서 일하는'))                             return { keyword: '영화계 인재',    icon: '🎬' };
       if (s.includes('형사정책 수업에서 만나'))                        return { keyword: '로스쿨 술친구',  icon: '🍻' };
       if (s.includes('쏘세지야채볶음') || s.includes('선민이 남편'))  return { keyword: '명절 요리왕',    icon: '🍳' };
@@ -312,7 +312,7 @@
       if (s.includes('상산고에서 공부잘하기로'))                       return { keyword: '상산고 전설',    icon: '🏆' };
       if (s.includes('바쁘다 바빠 인간'))                              return { keyword: '안 쉬는 사람',   icon: '🌊' };
       if (s.includes('국밥충이라 국밥 정보'))                          return { keyword: '국밥 정보통',    icon: '🍲' };
-      if (s.includes('특수교사') || s.includes('나의 모든 역사를 아는')) return { keyword: '평생 No.1',  icon: '💝' };
+      if (s.includes('특수교사') || s.includes('나의 모든 역사를 아는') || s.includes('어느 순간에도 내 편') || s.includes('중학교 때부터') && s.includes('찐친')) return { keyword: '평생 No.1', icon: '💝' };
       if (s.includes('어둠의 비밀조직 카톡방'))                        return { keyword: '비밀 조직원',    icon: '🌙' };
       if (s.includes('태종대에서 만난'))                               return { keyword: '태종대 인연',    icon: '⛵' };
       if (s.includes('결혼스토리가 제일 재미있음'))                    return { keyword: '결혼 스토리',    icon: '💍' };
@@ -330,7 +330,7 @@
       if (s.includes('한화팬이었음'))                                  return { keyword: '한화팬의 용기',  icon: '⚾' };
       if (s.includes('동현님') || s.includes('방탈출 진짜 많이'))     return { keyword: '방탈출 단짝',    icon: '🧩' };
       if (s.includes('초등학교 6학년때 전학') || s.includes('노래도 춤도 다 잘추고')) return { keyword: '끼 넘치는 친구', icon: '🎵' };
-      if (s.includes('간호사가 된 후에') || s.includes('중학교 때 영어학원')) return { keyword: '성실한 간호사', icon: '🏥' };
+      if (s.includes('간호사가 된 후에') || s.includes('중학교 때 영어학원')) return { keyword: '매력 넘치는 친구', icon: '🏥' };
       if (s.includes('이 부부는 함께 취미부자') || (s.includes('상준과 커플') && !s.includes('윤진부부'))) return { keyword: '찰떡 케미', icon: '💑' };
       if (s.includes('심심한 친구인줄 알았는데') || s.includes('자신의 길을 개척하는데에 진심')) return { keyword: '마음이 부자', icon: '🌈' };
       return { keyword: '', icon: '' };
@@ -366,14 +366,16 @@
           grid.innerHTML = '<p class="cards-msg">카드가 아직 준비 중이에요</p>';
           return;
         }
-        cardsCache = data.cards.map((card, i) => {
-          const meta = getCardMeta(card.story);
-          return {
-            icon: meta.icon || FALLBACK_ICONS[i % FALLBACK_ICONS.length],
-            keyword: meta.keyword || '',
-            story: card.story,
-          };
-        });
+        cardsCache = data.cards
+          .filter(card => !getCardMeta(card.story).hidden)
+          .map((card, i) => {
+            const meta = getCardMeta(card.story);
+            return {
+              icon: meta.icon || FALLBACK_ICONS[i % FALLBACK_ICONS.length],
+              keyword: meta.keyword || '',
+              story: card.story,
+            };
+          });
         for (let i = cardsCache.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
           [cardsCache[i], cardsCache[j]] = [cardsCache[j], cardsCache[i]];
