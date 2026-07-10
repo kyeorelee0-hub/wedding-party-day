@@ -87,6 +87,7 @@ function getCards() {
     const cards = rows.slice(1)
       .filter(row => row[1]) // B열 코멘트가 있는 행만
       .map(row => ({
+        name: String(row[0]).trim(),
         story: row[1],
       }));
 

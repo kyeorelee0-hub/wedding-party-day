@@ -274,31 +274,65 @@
 
   <script>
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby6OwpvXgDKs3ZVZJN0KMiZgaF0lA4bQOYBSy93bYapBMD0zE1vr2_uhFuWci4MERD88w/exec';
-    const ICONS = [
-      '⚖️','🎭','📚','🌸','🌟',
-      '🍀','⚾','🍽️','🎨','🔮',
-      '🤝','💃','🌿','🌈','✍️',
-      '🍃','💼','🍖','🩰','🎬',
-      '🍻','🍳','🏔️','🐯','⭐',
-      '🏆','🌊','🍲','💝','🌙',
-      '⛵','💍','🎯','👀','🧘',
-      '🚀','🌸','⚖️','🌟','🔄',
-      '🦁','💛','🌻','⚾','🧩',
-      '🎵','🏥','💑','🌈','✨'
+    const FALLBACK_ICONS = [
+      '⚖️','🎭','📚','🌸','🌟','🍀','⚾','🍽️','🎨','🔮',
+      '🤝','💃','🌿','🌈','✍️','🍃','💼','🍖','🩰','🎬',
+      '🍻','🍳','🏔️','🐯','⭐','🏆','🌊','🍲','💝','🌙',
+      '⛵','💍','🎯','👀','🧘','🚀','🌸','⚖️','🌟','🔄',
+      '🦁','💛','🌻','⚾','🧩','🎵','🏥','💑','🌈','✨'
     ];
 
-    const KEYWORDS = [
-      '민법 왕','준수 진성팬','만물박사','숨은 애교왕','평생 롤모델',
-      '윤진짝궁','기아 세금박사','알러지 제로','취미 부자','타로 마스터',
-      '입학부터 찐친','하리 팝핀','섬세한 감성','인생 반전러','언어 천재',
-      '술버릇 착한','조용한 대표님','먹성 선배','발레 동기','영화계 인재',
-      '로스쿨 술친구','명절 요리왕','백두산 동반','기아 동갑','덕질로 번 돈',
-      '상산고 전설','안 쉬는 사람','국밥 정보통','평생 No.1','비밀 조직원',
-      '태종대 인연','결혼 스토리','다트 고수','여자 보는 눈','인생 필라테스',
-      '같은날 퇴사','귀여운 막내','변호사 변신','인생 선배','180도 돌변',
-      '야구볼 때 야수','선함이 뚝뚝','베이스가 선한','한화팬의 용기','방탈출 단짝',
-      '끼 넘치는 친구','성실한 간호사','찰떡 케미','마음이 부자','독보적 존재감'
-    ];
+    const CARD_DATA = {
+      '오수현':   { keyword: '민법 왕',       icon: '⚖️' },
+      '노혜윤':   { keyword: '준수 진성팬',    icon: '🎭' },
+      '한우정':   { keyword: '만물박사',       icon: '📚' },
+      '정혜현':   { keyword: '숨은 애교왕',    icon: '🌸' },
+      '이희주':   { keyword: '평생 롤모델',    icon: '🌟' },
+      '임윤진':   { keyword: '윤진짝궁',       icon: '🍀' },
+      '한지훈':   { keyword: '기아 세금박사',  icon: '⚾' },
+      '이예랑':   { keyword: '타로 마스터',    icon: '🔮' },
+      '지상준':   { keyword: '취미 부자',      icon: '🎨' },
+      '안형진':   { keyword: '입학부터 찐친',  icon: '🤝' },
+      '김혜림':   { keyword: '하리 팝핀',      icon: '💃' },
+      '정재민':   { keyword: '섬세한 감성',    icon: '🌿' },
+      '권영인':   { keyword: '인생 반전러',    icon: '🌈' },
+      '한선민':   { keyword: '언어 천재',      icon: '✍️' },
+      '박종범':   { keyword: '술버릇 착한',    icon: '🍃' },
+      '온상헌':   { keyword: '조용한 대표님',  icon: '💼' },
+      '황인승':   { keyword: '먹성 선배',      icon: '🍖' },
+      '이거량':   { keyword: '발레 동기',      icon: '🩰' },
+      '곽희진':   { keyword: '영화계 인재',    icon: '🎬' },
+      '부성현':   { keyword: '로스쿨 술친구',  icon: '🍻' },
+      '하정진':   { keyword: '명절 요리왕',    icon: '🍳' },
+      '백민':     { keyword: '백두산 동반',    icon: '🏔️' },
+      '최하영':   { keyword: '기아 동갑',      icon: '🐯' },
+      '이영지':   { keyword: '덕질로 번 돈',   icon: '⭐' },
+      '박정훈':   { keyword: '상산고 전설',    icon: '🏆' },
+      '박성민':   { keyword: '안 쉬는 사람',   icon: '🌊' },
+      '조재광':   { keyword: '국밥 정보통',    icon: '🍲' },
+      '송건호':   { keyword: '평생 No.1',      icon: '💝' },
+      '정현석':   { keyword: '비밀 조직원',    icon: '🌙' },
+      '이원준':   { keyword: '태종대 인연',    icon: '⛵' },
+      '박진수':   { keyword: '결혼 스토리',    icon: '💍' },
+      '이병선':   { keyword: '다트 고수',      icon: '🎯' },
+      '류승훈':   { keyword: '여자 보는 눈',   icon: '👀' },
+      '소이쌤':   { keyword: '인생 필라테스',  icon: '🧘' },
+      '문예은':   { keyword: '같은날 퇴사',    icon: '🚀' },
+      '이송화':   { keyword: '귀여운 막내',    icon: '🌸' },
+      '이지수':   { keyword: '변호사 변신',    icon: '⚖️' },
+      '나소리':   { keyword: '인생 선배',      icon: '🌟' },
+      '박일훈':   { keyword: '180도 돌변',     icon: '🔄' },
+      '김동현':   { keyword: '야구볼 때 야수', icon: '🦁' },
+      '박선경':   { keyword: '선함이 뚝뚝',    icon: '💛' },
+      '방승익':   { keyword: '베이스가 선한',  icon: '🌻' },
+      '선구오빠': { keyword: '한화팬의 용기',  icon: '⚾' },
+      '하채은':   { keyword: '방탈출 단짝',    icon: '🧩' },
+      '문지예':   { keyword: '끼 넘치는 친구', icon: '🎵' },
+      '김다희':   { keyword: '성실한 간호사',  icon: '🏥' },
+      '허태원':   { keyword: '찰떡 케미',      icon: '💑' },
+      '소현석':   { keyword: '마음이 부자',    icon: '🌈' },
+      '이찬구':   { keyword: '독보적 존재감',  icon: '✨' },
+    };
 
     let cardsCache = [];
 
@@ -330,11 +364,14 @@
           grid.innerHTML = '<p class="cards-msg">카드가 아직 준비 중이에요</p>';
           return;
         }
-        cardsCache = data.cards.map((card, i) => ({
-          icon: card.icon || ICONS[i % ICONS.length],
-          keyword: KEYWORDS[i] || '',
-          story: card.story,
-        }));
+        cardsCache = data.cards.map((card, i) => {
+          const meta = CARD_DATA[card.name] || {};
+          return {
+            icon: meta.icon || FALLBACK_ICONS[i % FALLBACK_ICONS.length],
+            keyword: meta.keyword || '',
+            story: card.story,
+          };
+        });
         for (let i = cardsCache.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
           [cardsCache[i], cardsCache[j]] = [cardsCache[j], cardsCache[i]];
